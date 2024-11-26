@@ -1,2 +1,3 @@
 # Virushunter
-Sequence Bioinformatics Group Project
+## Main goal
+Given a nucleotide sequence, determine the probable hosts.
