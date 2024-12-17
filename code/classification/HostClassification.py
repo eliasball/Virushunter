@@ -9,7 +9,7 @@ class HostClassification:
         pass
 
 
-    def classify(self, genomeSequence: str, classifier: PUClassifier):
+    def classify(self, genomeSequence: str, classifier: PUClassifier) -> float:
         """
         Description: Classifies given query genome sequence based on the given classifier
         Args: genomeSequence (str): Genome sequence to classify and classifier and (PUClassifier): THe model that is used for classification
@@ -18,7 +18,7 @@ class HostClassification:
         pass
     
 
-    def classifyWithMultipleModels(self, genomeSequence: str, classifiers: dict):
+    def classifyWithMultipleModels(self, genomeSequence: str, classifiers: dict) -> tuple[str, float]:
         """
         Description: Composes a set of PU classifiers to predict the host with the highest confidence score
         Args: genomeSequence (str): The genome sequence to classify and classifiers (dict): A dictionary (keys = host names and values = trained PUClassifier instances)
