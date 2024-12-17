@@ -1,4 +1,3 @@
-from typing import List
 from classification import PUClassifier
 
 #  Performs the application of the PU binary classifiers and composes then to one model
