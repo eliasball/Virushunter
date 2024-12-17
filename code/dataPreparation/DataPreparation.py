@@ -29,7 +29,7 @@ class DataPreparation:
     def organizeTrainingDataByHost(self, genomeData: list[tuple[str, str, str]]) -> list[tuple[str, str, str]]:
         """
         Description: Organizes the training sequences for the genome data by the  host type
-        Args: genomeData (list): List of genome sequences (as FASTA files annotated by the virusname and the corresponding host name)
+        Args: genomeData (list[tuple[str, str, str]]): List of genome sequences (as FASTA files annotated by the virusname and the corresponding host name)
         Returns: Mapping of host types to genome sequences for preprocessing of the training set (individual training of all PU classifier)
         """
         pass

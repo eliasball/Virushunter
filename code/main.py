@@ -24,6 +24,7 @@ def main():
             dinucleotideFrequencies = dataPreprocessor.computeDinucleotideFrequencies(seq)
             featureVector = {**kmerFrequencies, **codonUsage, **dicodonUsage, **dinucleotideFrequencies}
             features.append((featureVector, host))
+            # TODO: make use of dataPreprocessor.bindFeaturesToMatrix(featureVector)
 
     # Classification (Training and Testing)
     trainer = ModelTraining.ModelTraining()
@@ -32,6 +33,7 @@ def main():
 
     # Train all models
     for host in organizedData.keys():
+        # TODO: Make use of trainer.extractRelevantTrainingData(features, host) for easier handling
         positiveSamples = list()  # TODO: Collect positive samples
         unlabeledSamples = list() # TODO: Collect unlabeled samples
         labels = [1] * len(positiveSamples) + [0] * len(unlabeledSamples)
