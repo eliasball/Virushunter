@@ -1,6 +1,7 @@
 from dataPreparation import DataPreparation
 from dataPreprocessing import DataPreprocessing
 from classification import HostClassification, PUClassifier
+from training import ModelTraining
 
 # Main method to control the flow of the whole pipeline 
 # TODO: We should outsource the training process into a extra main when we are leaving the sandbox level
@@ -8,12 +9,12 @@ from classification import HostClassification, PUClassifier
 def main():
 
     # Data Preparation of TRaining Data
-    dataPreperator = DataPreparation()
+    dataPreperator = DataPreparation.DataPreparation()
     trainingGenomeData = list()
     organizedData = dataPreperator.organizeTrainingDataByHost(trainingGenomeData)
 
     # Preprocessing of training data
-    dataPreprocessor = DataPreprocessing()
+    dataPreprocessor = DataPreprocessing.DataPreprocessing()
     features = []
     for host, sequences in organizedData.items():
         for seq in sequences:
@@ -24,8 +25,9 @@ def main():
             featureVector = {**kmerFrequencies, **codonUsage, **dicodonUsage, **dinucleotideFrequencies}
             features.append((featureVector, host))
 
-    # Classification (Training and Testing )
-    classifier = HostClassification()
+    # Classification (Training and Testing)
+    trainer = ModelTraining.ModelTraining()
+    classifier = HostClassification.HostClassification()
     puModels = {}
 
     # Train all models
@@ -34,7 +36,7 @@ def main():
         unlabeledSamples = list() # TODO: Collect unlabeled samples
         labels = [1] * len(positiveSamples) + [0] * len(unlabeledSamples)
         allFeatures = positiveSamples + unlabeledSamples
-        puModel = classifier.trainPUClassifier(allFeatures, labels)
+        puModel = trainer.trainPUClassifier(allFeatures, labels)
         puModels[host] = puModel
 
     # Execute the classifiers for all query sequences

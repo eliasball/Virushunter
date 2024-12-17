@@ -14,7 +14,7 @@ class DataPreparation:
         """
         Description: Loads annotated genome sequences for training throught executing a given script
         Args: filepath (str): Path to the script that loads the annotated genome sequence files
-        Returns: List of genome sequences with thier name and corresponding host name(s)
+        Returns: List/Dictonary of genome sequences with their name, (taxonomic ID) and corresponding host name(s)
         """
         pass
     
