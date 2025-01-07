@@ -175,6 +175,7 @@ def unzip_file(gzip_path, output_path, taxid):
     """
     Unzips a `.gz` file into the specified directory, processes it to keep the first header 
     and concatenate all sequences, and removes the original zipped file.
+    Removes all fasta headers except for the first one and concatenates the sequences.
 
     Parameters:
         gzip_path (str): Path to the `.gz` file.

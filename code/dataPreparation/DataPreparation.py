@@ -13,14 +13,12 @@ class DataPreparation:
         #Initializes this class
         pass
   
-    def loadTrainingGenomeSequences(self, filepath: str) -> list[tuple[str, str, str]]:
+    def loadTrainingGenomeSequences(self) -> list[tuple[str, str, str]]:
         """
         Description: Loads annotated genome sequences for training throught executing a given script
         Args: filepath (str): Path to the script that loads the annotated genome sequence files
-        Returns: List/Dictonary of genome sequences with their name (taxonomic ID) and corresponding host name(s)
+        Returns: List/Dictonary of genome sequences with their name (taxonomic ID) and corresponding host taxid
         """
-        # Not too sure how to do: needs to run script "virusHostQuery.py" no args
-
 
         # Following section has not been tested, just a skeleton idea
 
@@ -66,9 +64,21 @@ class DataPreparation:
         """
         Description: Loads genome sequence from a file (in FASTA format)
         Args: filepath (str): Path to the FASTA file of the query
-        Returns: Tupel of genome sequence of query (and the name (taxonomic ID) of the queried virus)
+        Returns: Tuple of genome sequence of query (and the name (taxonomic ID) of the queried virus)
         """
-        pass
+        genome_sequence = ""
+        taxid = "" # TODO: think of how to get taxid of virus, not directly present in fasta file,
+                   # given as input or searched online?
+        try:
+            with open(filepath, "r") as file:
+                lines = file.readlines()
+                genome_sequence = "".join(lines[1:]).replace("\n", "")  # Skip header and join the rest
+        except Exception as e:
+            print(f"Error reading file {filepath}: {e}")
+        
+        
+        return (genome_sequence, taxid)
+
 
     def organizeTrainingDataByHost(self, genomeData: list[tuple[str, str, str]]) -> list[tuple[str, str, str]]:
         """
@@ -76,4 +86,8 @@ class DataPreparation:
         Args: genomeData (list[tuple[str, str, str]]): List of genome sequences (as FASTA files annotated by the virusname and the corresponding host name)
         Returns: Mapping of host types to genome sequences for preprocessing of the training set (individual training of all PU classifier)
         """
+
+        orderedGenomeData = [] # needs checking
+        orderedGenomeData = sorted(genomeData, key=lambda x: int(x[0]))
+
         pass
