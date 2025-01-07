@@ -152,7 +152,7 @@ class DataPreprocessing:
     
 
 
-    def choosenFeaturesoneGenome(self, genomeSequence: str, chosenFeatures: dict[str, list]) -> list[float]:
+    def choosenFeaturesFromGenome(self, genomeSequence: str, chosenFeatures: dict[str, list]) -> list[float]:
         """
         Description: Extracts selected features for one genome sequence based on chosenFeatures.
         Args: A DNA sequence, chosenFeatures specifying which features to extract and their parameters.
@@ -206,7 +206,7 @@ class DataPreprocessing:
 
         for genome_name, genome_sequence in genomes.items():
             # for one genome
-            feature_vector = self.choosenFeaturesoneGenome(genome_sequence, chosenFeatures)
+            feature_vector = self.choosenFeaturesFromGenome(genome_sequence, chosenFeatures)
             # add feature_vector to matrix
             feature_matrix.append(feature_vector)
 
@@ -216,14 +216,14 @@ class DataPreprocessing:
 
 if __name__ == "__main__":
 
-    genomeSequence = "agctaaggcct"
+    genomeSequence = "AGCTAAGGCCTNN"
     k = 2
     chosenFeatures = { "kmer": [3], "codon": [], "dinucleotide": []}
 
     genomes = genomes = {
-    "genome1": "agctaaggcct",
-    "genome2": "ttgcaaggtcc",
-    "genome3": "ccgtaaggcat"
+    "genome1": "AGCTAAGGCCT",
+    "genome2": "TTGCAAGGTCC",
+    "genome3": "CCGTAAGGCAT"
     }
 
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     #specific_codon = preprocessor.specificCodonFrequency(genomeSequence, targetCodon="agc")
     dicodons = preprocessor.calculateDicodon(genomeSequence)
     dinucleotide_frequencies = preprocessor.computeDinucleotideFrequencies(genomeSequence)
-    choosen_feature = preprocessor.choosenFeaturesoneGenome(genomeSequence,chosenFeatures)
+    choosen_feature = preprocessor.choosenFeaturesFromGenome(genomeSequence,chosenFeatures)
     feature_matrix = preprocessor.bindFeaturesToMatrix(genomes,chosenFeatures)
 
     #Print returns
