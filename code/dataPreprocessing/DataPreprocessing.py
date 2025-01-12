@@ -266,10 +266,10 @@ if __name__ == "__main__":
     # Generate Mock data
     chosenFeatures = { "kmer": [2, 3, 5], "codon_translation": [], "dicodon_translation" : []}
 
-    genomes = [("hosttaxID1", "virustaxID1", "AAAAAAAAAAAAAA"), ("hosttaxID2", "virustaxID2", "TGCATGCATGCAT"),
-               ("hosttaxID3", "virustaxID3", "AAAAAAAAATTTTTTTTTTTTGGGGGGGGGGGGGCCCCCCCCCCCATATATATATATATATA"),
-               ("hosttaxID4", "virustaxID4", "TGCATGCATGCATTGTGACGACTGAACGTACGTGCACGATGCAATGTTGCCGAATTGGCAATGC"),
-               ("hosttaxID5", "virustaxID5", "AUGAUGAUGAUGAUGAUGAUGAUG")]
+    genomes = [("hosttaxID1", "virustaxID1", "AAAAAAAAAAAAAA"), ("hosttaxID1", "virustaxID2", "TGCATGCATGCAT"),
+               ("hosttaxID1", "virustaxID3", "AAAAAAAAATTTTTTTTTTTTGGGGGGGGGGGGGCCCCCCCCCCCATATATATATATATATA"),
+               ("hosttaxID2", "virustaxID4", "TGCATGCATGCATTGTGACGACTGAACGTACGTGCACGATGCAATGTTGCCGAATTGGCAATGC"),
+               ("hosttaxID2", "virustaxID5", "AUGAUGAUGAUGAUGAUGAUGAUG")]
 
     preprocessor = DataPreprocessing()
     feature_dataframe = preprocessor.calculateFeatureMatrix(genomes,chosenFeatures)
@@ -288,5 +288,5 @@ if __name__ == "__main__":
       print("-" * 100) #Split the different genomes visually
 
     #Save features in a csv
-    preprocessor.saveFeatureMatrixAsCSV(feature_dataframe, "mock_features_preprocessing.csv")
+    preprocessor.saveFeatureMatrixAsCSV(feature_dataframe, "code/mock_features_preprocessing.csv")
 
