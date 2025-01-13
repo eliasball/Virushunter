@@ -22,7 +22,7 @@ class DataPreparation:
         # header already removed, should be ready to be used in dataPreprocessing
         # TODO: define dataPath according to where it will be called in, right now works when 
         # invoked from /Virushunter/code/dataPreparation/   
-        dataPath = "../../viral_genomes/"
+        dataPath = "../viral_genomes/"
         genome_data = []
 
         # Check if the base directory exists
