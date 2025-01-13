@@ -257,6 +257,7 @@ class DataPreprocessing:
               file_path (str): The path to the CSV file where the data will be saved.
         Returns: None
         """
+        
         feature_matrix_df.to_csv(file_path, index=False)
         print(f"Feature matrix successfully saved to {file_path}")
 
@@ -264,12 +265,60 @@ class DataPreprocessing:
 if __name__ == "__main__":
 
     # Generate Mock data
-    chosenFeatures = { "kmer": [2, 3, 5], "codon_translation": [], "dicodon_translation" : []}
+    chosenFeatures = { "kmer": [2, 3], "codon_translation": [], "dicodon_translation" : []}
 
-    genomes = [("hosttaxID1", "virustaxID1", "AAAAAAAAAAAAAA"), ("hosttaxID1", "virustaxID2", "TGCATGCATGCAT"),
-               ("hosttaxID1", "virustaxID3", "AAAAAAAAATTTTTTTTTTTTGGGGGGGGGGGGGCCCCCCCCCCCATATATATATATATATA"),
-               ("hosttaxID2", "virustaxID4", "TGCATGCATGCATTGTGACGACTGAACGTACGTGCACGATGCAATGTTGCCGAATTGGCAATGC"),
-               ("hosttaxID2", "virustaxID5", "AUGAUGAUGAUGAUGAUGAUGAUG")]
+    genomes = [
+    # Host 1
+    ("hosttaxID1", "virustaxID1", "AAAACAA"), 
+    ("hosttaxID1", "virustaxID2", "AAAAAAGGAAAA"),
+    ("hosttaxID1", "virustaxID3", "AAAACAATTTT"), 
+    ("hosttaxID1", "virustaxID4", "AAAAAAGGAAAA"),
+    ("hosttaxID1", "virustaxID5", "AAAAAATCAAAATTTT"), 
+    ("hosttaxID1", "virustaxID6", "TGAAAAACATAAAA"),
+    ("hosttaxID1", "virustaxID7", "AAAAAAAAATTTAAAAGAAAA"), 
+    ("hosttaxID1", "virustaxID8", "AAAATTTAAAAGAAAA"),
+    ("hosttaxID1", "virustaxID9", "AAAAAAAGGTTAAAAA"), 
+    ("hosttaxID1", "virustaxID10", "AAAAAATTAAGGGAAA"),
+    ("hosttaxID1", "virustaxID11", "AAAAGAAAAATTTAAA"), 
+    ("hosttaxID1", "virustaxID12", "TGAAAAATGGAAA"),
+    ("hosttaxID1", "virustaxID13", "AAAAAAGTTTAAA"), 
+    ("hosttaxID1", "virustaxID14", "AAAATTTAAAAAGG"),
+    ("hosttaxID1", "virustaxID15", "AAAAAAAAGGTTAA"),
+
+    # Host 2
+    ("hosttaxID2", "virustaxID16", "CGGCGCCGCTGCGGC"),
+    ("hosttaxID2", "virustaxID17", "CCCGGTGGGAC"), 
+    ("hosttaxID2", "virustaxID18", "CCCCCTGGGGGA"),
+    ("hosttaxID2", "virustaxID19", "CGCGCGCGCAGCAGCGC"), 
+    ("hosttaxID2", "virustaxID20", "CCCGGGACCCGGGCC"),
+    ("hosttaxID2", "virustaxID21", "CCCGGGAACCCGGG"),
+    ("hosttaxID2", "virustaxID22", "CGGCCGCGGCTGCGG"), 
+    ("hosttaxID2", "virustaxID23", "CCCGGTGGGCCC"),
+    ("hosttaxID2", "virustaxID24", "CCCCGCTGGGGC"), 
+    ("hosttaxID2", "virustaxID25", "CGCGCGCTCAGCGGC"),
+    ("hosttaxID2", "virustaxID26", "CGGCCGGACCCGGC"), 
+    ("hosttaxID2", "virustaxID27", "CCCGGAACGCGGG"),
+    ("hosttaxID2", "virustaxID28", "CCCGCCGCGCTGCGG"), 
+    ("hosttaxID2", "virustaxID29", "CGGGGTGGGCGC"),
+    ("hosttaxID2", "virustaxID30", "CCCCGCCGGGAGC"),
+
+    # Host 3
+    ("hosttaxID3", "virustaxID31", "TTTACGTACGTAAA"), 
+    ("hosttaxID3", "virustaxID32", "TTTACGTCGTAATTT"),
+    ("hosttaxID3", "virustaxID33", "TTTTTTCGTCGTTTAA"), 
+    ("hosttaxID3", "virustaxID34", "TTTAAACGTTTAAA"),
+    ("hosttaxID3", "virustaxID35", "TTTACGTTTTAAA"), 
+    ("hosttaxID3", "virustaxID36", "TTTACGCGTTAAA"),
+    ("hosttaxID3", "virustaxID37", "TTTTCGTCGTAATA"), 
+    ("hosttaxID3", "virustaxID38", "TTTAAACGTAAATAA"),
+    ("hosttaxID3", "virustaxID39", "TTTTTTCGTTCGTTAA"), 
+    ("hosttaxID3", "virustaxID40", "TTTAAACGTAAATA"),
+    ("hosttaxID3", "virustaxID41", "TTTACGCGTTTAAA"), 
+    ("hosttaxID3", "virustaxID42", "TTTACGTCGTAATT"),
+    ("hosttaxID3", "virustaxID43", "TTTTTTCGTTGTTTAA"), 
+    ("hosttaxID3", "virustaxID44", "TTTAAACGTTTAAA"),
+    ("hosttaxID3", "virustaxID45", "TTTACGTTTTATAA")
+]
 
     preprocessor = DataPreprocessing()
     feature_dataframe = preprocessor.calculateFeatureMatrix(genomes,chosenFeatures)
