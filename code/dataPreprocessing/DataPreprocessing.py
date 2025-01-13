@@ -179,6 +179,11 @@ class DataPreprocessing:
         # Return array where each index corresponds to a specific translation of a dicodon and the relative frequency of invalid dicodons
         return normalized_frequencies, invalid_dicodon
 
+    def calculateSequenceLength(self, genome: str) -> int:
+        if len(genome) > 0:
+            return float(len(genome))
+        else:
+            return 0.0
 
   
     def extractFeaturesFromGenome(self, genomeSequence: str, chosenFeatures: list[str]) -> dict[str, list[float]]:
@@ -205,6 +210,9 @@ class DataPreprocessing:
         if "dicodon_translation" in chosenFeatures:
             dicodon_frequencies, invalid_dicodon_ratio = self.calculateDicodonTranslation(genomeSequence)
             feature_dict["Dicodon"] = dicodon_frequencies + [invalid_dicodon_ratio]
+
+        if "sequence_length" in chosenFeatures:
+            feature_dict["Length"] = self.calculateSequenceLength(genomeSequence)
 
         return feature_dict
 
@@ -265,7 +273,7 @@ class DataPreprocessing:
 if __name__ == "__main__":
 
     # Generate Mock data
-    chosenFeatures = { "kmer": [2, 3], "codon_translation": [], "dicodon_translation" : []}
+    chosenFeatures = { "kmer": [2, 3], "codon_translation": [], "dicodon_translation" : [], "sequence_length" : []}
 
     genomes = [
     # Host 1
