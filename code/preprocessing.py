@@ -10,6 +10,7 @@ filesForHosts = {host: [f.name for f in os.scandir("../viral_genomes/" + host) i
 with open(featureFilePath, "a") as featureFile:
     dataPreprocessor = DataPreprocessing.DataPreprocessing()
     for host in hosts:
+        print ("Processing host: " + host)
         for filename in filesForHosts[host]:
             with open("../viral_genomes/" + host + "/" + filename, "r") as file:
                 lines = file.readlines()
