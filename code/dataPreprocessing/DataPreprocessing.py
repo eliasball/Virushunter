@@ -10,6 +10,38 @@ class DataPreprocessing:
         #Initializes this class
         pass
 
+    def extractKmerFrequenciesSimple(self, genomeSequence: str, k: int) -> list[float]:
+        """
+        Description: Extracts k-mer frequencies, but without the reverse complement.
+        """
+
+        # uppercase
+        genomeSequence = genomeSequence.upper()
+
+        # Change RNA to DNA if it is necessary
+        if 'U' in genomeSequence:
+            genomeSequence = genomeSequence.replace('U', 'T')  
+
+        # get all valid k-mers
+        bases = ['A', 'G', 'C', 'T']
+        kmerCounts = {''.join(kmer): 0 for kmer in product(bases, repeat=k)} #list of all possible combinations of bases
+
+        # count kmers
+        totalKmerCount = 0
+        for i in range(0, len(genomeSequence) - k + 1):
+            kmer = genomeSequence[i:i+k]
+            if kmer in kmerCounts.keys():
+                # kmer is valid
+                kmerCounts[kmer] += 1
+                totalKmerCount += 1
+
+        # turn into frequencies
+        for key, val in kmerCounts.items():
+            kmerCounts[key] = val/totalKmerCount
+
+        return kmerCounts.values()
+
+
     def extractKmerFrequencies(self, genomeSequence: str, k: int) -> tuple[list[float], float]:
         """
         Description: Extracts relative k-mer frequencies from a genome sequence for a given k. Handles invalid k-mers separately in counter.
@@ -200,6 +232,13 @@ class DataPreprocessing:
                 kmer_label = f"Kmer{k}"
                 kmer_frequencies, invalid_kmer_ratio = self.extractKmerFrequencies(genomeSequence, k)
                 feature_dict[kmer_label] = kmer_frequencies + [invalid_kmer_ratio]
+
+        # Extract kmers without reverse complement
+        if 'kmer_simple' in chosenFeatures:
+            for k in chosenFeatures['kmer_simple']:
+                kmer_label = f"KmerSimple{k}"
+                kmer_frequencies = self.extractKmerFrequenciesSimple(genomeSequence, k)
+                feature_dict[kmer_label] = kmer_frequencies
 
         # Extract codon frequencies
         if "codon_translation" in chosenFeatures:
