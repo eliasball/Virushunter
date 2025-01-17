@@ -1,0 +1,1 @@
+Run virusHostQuery.py from inside the viral_genomes folder.
