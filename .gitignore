@@ -168,3 +168,6 @@ cython_debug/
 #.idea/
 
 .vscode/
+
+features/*
+viral_genomes/*/
