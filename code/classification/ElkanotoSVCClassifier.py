@@ -10,14 +10,15 @@ class ElkanotoSVCClassifier(ClassifierMixin, BaseEstimator):
     as a predictor.
     """
 
-    def __init__(self, threshold=0.5, hold_out_ratio=0.1):
+    def __init__(self, threshold=0.5, hold_out_ratio=0.1, random_state=None):
         self.threshold = threshold
         self.hold_out_ratio = hold_out_ratio
+        self.random_state = random_state
 
     def fit(self, X, y):
         ## init models
         # use radial basis function and enable estimation of probabilities when classifying
-        self.internalModel = SVC(kernel='rbf', probability=True)
+        self.internalModel = SVC(kernel='rbf', probability=True, random_state=self.random_state)
 
         # use basic Elkanoto PU classifier with hold-out
         
@@ -28,7 +29,7 @@ class ElkanotoSVCClassifier(ClassifierMixin, BaseEstimator):
         # Whenever predicting a new datapoint, the positive probability is predicted using the underlying predictor,
         # and is then divided by the mean probability of the hold-out.
         # The prediction is labeled positive if the ratio is bigger than the given threshold.
-        self.model = ElkanotoPuClassifier(self.internalModel, hold_out_ratio=self.hold_out_ratio)
+        self.model = ElkanotoPuClassifier(self.internalModel, hold_out_ratio=self.hold_out_ratio, random_state=self.random_state)
 
         ## fit
         self.classes_ = unique_labels(y)
