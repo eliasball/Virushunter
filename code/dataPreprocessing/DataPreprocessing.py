@@ -40,9 +40,60 @@ class DataPreprocessing:
             kmerCounts[key] = val/totalKmerCount
 
         return kmerCounts.values()
+    
+    def extractKmerFrequencies(self, genomeSequence: str, k: int) -> list[float]:
+        """
+        Description: Extracts relative k-mer frequencies from a genome sequence for a given k.
+        Args: DNA sequence and size of the k-mers
+        Returns: Array of relative K-mer frequencies
+        """
+
+        # Change RNA to DNA if it is necessary
+        if 'U' in genomeSequence:
+            genomeSequence = genomeSequence.replace('U', 'T')  
+        
+        # Calculate the reverse complement of the given sequence
+        complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+        reverse_genome_sequence = ''
+        for base in reversed(genomeSequence):
+            if base in complement:
+                reverse_genome_sequence += complement[base]
+            else:
+                reverse_genome_sequence += base   # N is complemetary to N 
+        
+        # Instanciate Dict to store the kmer Frequencies and initialize counter for total kmers
+        bases = ['A', 'G', 'C', 'T']    
+        kmer_combinations = [''.join(kmer) for kmer in product(bases, repeat=k)]    #list of all possible combinations of bases
+        kmer_frequencies = [0] * len(kmer_combinations)     #list of 0 to initiate ocurrence of each bases combination
+        kmer_index = {kmer: idx for idx, kmer in enumerate(kmer_combinations)}   #dict with kmer as key and index as value
+        total_kmers_count = 0
+
+        # count k-mers of the genome string in 6-frame read style 
+        for i in range(len(genomeSequence) - k + 1):
+            
+            # Count Forward String
+            kmer = genomeSequence[i:i + k]
+            if kmer in kmer_index:  
+                kmer_frequencies[kmer_index[kmer]] += 1
+                total_kmers_count += 1
+
+            # Count Backward String
+            kmerReverse = reverse_genome_sequence[i:i + k]
+            if kmerReverse in kmer_index:  
+                kmer_frequencies[kmer_index[kmerReverse]] += 1
+                total_kmers_count += 1
+
+        # Convert absolute to relative frequencies
+        if total_kmers_count > 0:
+            kmer_frequencies = [freq / total_kmers_count for freq in kmer_frequencies]    #calculate ratio for each entry in kmer_frequencies
+        else:
+            kmer_frequencies = [0.0] * len(kmer_frequencies)
+
+        # Return array of relative K-mer frequencies
+        return kmer_frequencies
 
 
-    def extractKmerFrequencies(self, genomeSequence: str, k: int) -> tuple[list[float], float]:
+    def extractKmerFrequenciesWithInvalidFrequency(self, genomeSequence: str, k: int) -> tuple[list[float], float]:
         """
         Description: Extracts relative k-mer frequencies from a genome sequence for a given k. Handles invalid k-mers separately in counter.
         Args: DNA sequence and size of the k-mers
@@ -230,7 +281,14 @@ class DataPreprocessing:
         if "kmer" in chosenFeatures:
             for k in chosenFeatures["kmer"]:
                 kmer_label = f"Kmer{k}"
-                kmer_frequencies, invalid_kmer_ratio = self.extractKmerFrequencies(genomeSequence, k)
+                kmer_frequencies = self.extractKmerFrequencies(genomeSequence, k)
+                feature_dict[kmer_label] = kmer_frequencies
+
+        # Check and extract k-mers with invalid frequencies for all specified k values
+        if "kmer_plus_inval" in chosenFeatures:
+            for k in chosenFeatures["kmer_plus_inval"]:
+                kmer_label = f"KmerPlusInval{k}"
+                kmer_frequencies, invalid_kmer_ratio = self.extractKmerFrequenciesWithInvalidFrequency(genomeSequence, k)
                 feature_dict[kmer_label] = kmer_frequencies + [invalid_kmer_ratio]
 
         # Extract kmers without reverse complement
