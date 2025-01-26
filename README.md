@@ -1,9 +1,7 @@
 # Virushunter
-[Google Docs](https://docs.google.com/document/d/1gUUoxhE42RJyU71bnY_JSvurlBMEAIf57Ghilni621I/edit?usp=sharing)
 ## Main goal
 Given a nucleotide sequence, determine the probable hosts.
 
+To view the implemented pipeline, take a look inside `code/trainingProcess.ipynb`.
 
-
-## DATA PREP COMMIT
-Currently works as a "standalone" script (given a set of hosts, downloads all known virus sequences that attack the host). Format: (folder name | file name | file content) = (host taxid | virus taxid | genome). Needs to be included into DataPreparation.py and test if the tuples are correctly created.
+The requirements are Python version `3.12` and the packages specified in `requirements.txt`.
