@@ -170,3 +170,4 @@ cython_debug/
 .vscode/
 
 features/*.csv
+figures/*.png
