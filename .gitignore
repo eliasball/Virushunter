@@ -170,4 +170,5 @@ cython_debug/
 .vscode/
 
 features/*.csv
+!features/features_kmer-3-6.csv
 figures/*.png
